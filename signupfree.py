@@ -1,4 +1,10 @@
 # checking the password matching condition
+from tkinter import messagebox
+from tkinter import *
+import mysql.connector
+from connectorVariables import host, user, password, database, port
+
+
 def clickedsignupfree():
     if txtfullname.get not in lstfullname:
         if not txtfullname.get() == "" and not txtusername.get() == '' and not txtsecuritykey.get() == '' and not txtphoneno.get() == '' and not txtpassword.get() == '' and not txtconfirmpassword.get() == '':
@@ -7,7 +13,8 @@ def clickedsignupfree():
                     sql = f'INSERT INTO nameandpass VALUES ("{txtfullname.get()}","{txtusername.get()}","{txtpassword.get()}","{txtsecuritykey.get()}",{txtphoneno.get()})'
                     mycur2.execute(sql)
                     mydb.commit()
-                    messagebox.showinfo('Message title', 'Successfully signed up!')
+                    messagebox.showinfo(
+                        'Message title', 'Successfully signed up!')
                     window.destroy()
                     import login
                 elif txtusername.get() in lstusernames:
@@ -17,17 +24,14 @@ def clickedsignupfree():
         else:
             messagebox.showinfo('Sign Up', 'Fields cannot be left blank')
     elif txtfullname.get() in lstfullname:
-        res = messagebox.askyesno('Sign Up', 'Account already exists, want to login?')
+        res = messagebox.askyesno(
+            'Sign Up', 'Account already exists, want to login?')
         if res == 'True':
             window.destroy()
             import login
 
 
 # making the introductory window
-import time
-import mysql.connector
-from tkinter import *
-from tkinter import messagebox
 
 window = Tk()
 window.geometry('600x600')
@@ -45,17 +49,23 @@ frame.place(relx=0.5, rely=0.23, relwidth=0.8, relheight=0.6, anchor='n')
 lblloginheading = Label(frame1, text="User Sign Up", font=("Helvetica Bold", 20), anchor="center", bg="#000834",
                         fg="white")
 lblloginheading.place(relx=0.32, rely=0)
-lblfullname = Label(frame, text='Full Name', font=('Ubuntu Bold', 12), bg="#000834", fg="white")
+lblfullname = Label(frame, text='Full Name', font=(
+    'Ubuntu Bold', 12), bg="#000834", fg="white")
 lblfullname.place(relx=0, rely=0.05)
-lblusername = Label(frame, text='Username', font=('Ubuntu Bold', 12), bg="#000834", fg="white")
+lblusername = Label(frame, text='Username', font=(
+    'Ubuntu Bold', 12), bg="#000834", fg="white")
 lblusername.place(relx=0.5, rely=0.05)
-lblsecuritykey = Label(frame, text='Provide a Backup Security Key', font=('Ubuntu Bold', 12), bg="#000834", fg="white")
+lblsecuritykey = Label(frame, text='Provide a Backup Security Key', font=(
+    'Ubuntu Bold', 12), bg="#000834", fg="white")
 lblsecuritykey.place(relx=0, rely=0.4)
-lblphoneno = Label(frame, text='Phone Number', font=('Ubuntu Bold', 12), bg="#000834", fg="white")
+lblphoneno = Label(frame, text='Phone Number', font=(
+    'Ubuntu Bold', 12), bg="#000834", fg="white")
 lblphoneno.place(relx=0.5, rely=0.4)
-lblpassword = Label(frame, text='Password', font=('Ubuntu Bold', 12), bg="#000834", fg="white")
+lblpassword = Label(frame, text='Password', font=(
+    'Ubuntu Bold', 12), bg="#000834", fg="white")
 lblpassword.place(relx=0, rely=0.75)
-lblconfirmpassword = Label(frame, text='Confirm password', font=('Ubuntu Bold', 12), bg="#000834", fg="white")
+lblconfirmpassword = Label(frame, text='Confirm password', font=(
+    'Ubuntu Bold', 12), bg="#000834", fg="white")
 lblconfirmpassword.place(relx=0.5, rely=0.75)
 
 # adding the textboxes
@@ -76,7 +86,8 @@ txtconfirmpassword.place(relx=0.53, rely=0.85, relwidth=0.45, relheight=0.08)
 lstusernamesandpasswords = []
 
 # connecting to mysql
-mydb = mysql.connector.connect(host="localhost", user="root", password="Sargun05", database='klimaccdata', port=3307)
+mydb = mysql.connector.connect(
+    host=host, user=user, password=password, database=database, port=port)
 mycursor = mydb.cursor()
 mycursor.execute('USE klimaccdata')
 
@@ -100,7 +111,8 @@ for i in range(len(lstusernamesandpasswords)):
     lstusernames.append(lstusernamesandpasswords[i][1])
     lstfullname.append(lstusernamesandpasswords[i][0])
 
-btnsignupfree = Button(canvas, text="Sign Up", font = ('Ubuntu Bold', 13), fg="white", bg='#000834', command=clickedsignupfree)
+btnsignupfree = Button(canvas, text="Sign Up", font=(
+    'Ubuntu Bold', 13), fg="white", bg='#000834', command=clickedsignupfree)
 btnsignupfree.place(relx=0.38, rely=0.88, relheight=0.05, relwidth=0.25)
 
 window.mainloop()

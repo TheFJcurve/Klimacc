@@ -4,6 +4,8 @@ from tkinter import *
 import requests
 import webbrowser
 from PIL import Image, ImageTk
+from connectorVariables import host, user, password, database, port
+
 
 def clickedlocation():
     """When the user inputs location, the location is stored and the tab is closed"""
@@ -59,7 +61,8 @@ def tablefunctions(function):
 def mysqlmaking():
     """Creates the databases and the table"""
     global mydb
-    mydb = mysql.connect(host="localhost", user="root", password="Sargun05", db="test", port=3307)
+    mydb = mysql.connect(host=host, user=user,
+                         password=password, datababse=database, port=port)
     mycur = mydb.cursor(buffered=True)
     mycur.execute("create database if not exists klimaccdata;")
     mycur.execute("use klimaccdata;")
@@ -101,7 +104,8 @@ def disasterprediction():
     # for checking for storms
     for pressure in pressures:
         if pressure <= 950:
-            disaster_list.append('There is a low pressure, so there is a possibility of a storm.')
+            disaster_list.append(
+                'There is a low pressure, so there is a possibility of a storm.')
     # for checking for wildfires
     if hightemp:
         if humidities[-1] <= 10:
@@ -163,13 +167,15 @@ canvas.pack()
 frame = Frame(canvas, bg='#000834', bd=10)
 frame.place(relx=0.5, rely=0.2, relwidth=0.8, relheight=0.6, anchor='n')
 
-heading = Label(frame, text="Enter Your Location", font=("Helvetica Bold", 20), fg="white", bg="#000834")
+heading = Label(frame, text="Enter Your Location", font=(
+    "Helvetica Bold", 20), fg="white", bg="#000834")
 heading.place(relx=0.23, rely=0.08)
 
 location_user = Entry(frame, justify="center")
 location_user.place(relx=0.2, rely=0.4, relheight=0.08, relwidth=0.6)
 
-button = Button(frame, text="Submit", font = ('Ubuntu Light', 13, 'bold'), fg = '#000834', command=clickedlocation, bg="#fb5b8d")
+button = Button(frame, text="Submit", font=('Ubuntu Light', 13,
+                'bold'), fg='#000834', command=clickedlocation, bg="#fb5b8d")
 button.place(relx=0.41, rely=0.7, relheight=0.1, relwidth=0.2)
 
 root.mainloop()
@@ -195,8 +201,8 @@ disasters"""
 window = Tk()
 window.title('View Data Regarding Your Location!')
 window.geometry("600x600")
-window.minsize(600,600)
-window.maxsize(600,600)
+window.minsize(600, 600)
+window.maxsize(600, 600)
 canvas = Canvas(window, height=600, width=600, bg='#fb5b8d')
 canvas.pack()
 
@@ -224,22 +230,27 @@ heading = Label(frame1, text="Location Information", font=("Helvetica Bold", 20)
                 fg="white")
 heading.place(relx=0.23, rely=0)
 
-label1 = Label(frame2, text=f"Graphs for the Location", font=("Ubuntu Light", 14), bg="#000834", fg="white")
+label1 = Label(frame2, text=f"Graphs for the Location",
+               font=("Ubuntu Light", 14), bg="#000834", fg="white")
 label1.place(relx=0.525, rely=0.01)
-button = Button(frame2, text='Show the Graphs', fg="#000834", bg="#fb5b8d", command=graphs)
+button = Button(frame2, text='Show the Graphs',
+                fg="#000834", bg="#fb5b8d", command=graphs)
 button.place(relx=0.62, rely=0.15, relheight=0.09, relwidth=0.25)
 image1 = Label(frame2, image=background_image1)
 image1.place(relx=0.05, rely=0, relheight=0.3, relwidth=0.35)
 
-label2 = Label(frame2, text=f"Predicted Disasters", font=("Ubuntu Light", 14), bg="#000834", fg="white")
+label2 = Label(frame2, text=f"Predicted Disasters", font=(
+    "Ubuntu Light", 14), bg="#000834", fg="white")
 label2.place(relx=0.55, rely=0.4)
-label_disaster = Label(frame2, text=f"{disaster_string}", bg="#000834", fg="white")
+label_disaster = Label(
+    frame2, text=f"{disaster_string}", bg="#000834", fg="white")
 label_disaster.place(relx=0.62, rely=0.5, relheight=0.09, relwidth=0.25)
 image2 = Label(frame2, image=background_image2)
 image2.place(relx=0.05, rely=0.35, relheight=0.3, relwidth=0.35)
 
 # for showing info regarding every renewable energy source
-label3 = Label(frame2, text=f"Renewable Info", font=("Ubuntu Light", 14), bg="#000834", fg="white")
+label3 = Label(frame2, text=f"Renewable Info", font=(
+    "Ubuntu Light", 14), bg="#000834", fg="white")
 label3.place(relx=0.58, rely=0.76)
 renewables = Button(frame2, text=f'Show Info of all the Compatible Renewables', fg="#000834", bg="#fb5b8d",
                     command=infopage)

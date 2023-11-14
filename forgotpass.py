@@ -4,6 +4,7 @@ import mysql.connector
 from tkinter import *
 from tkinter import messagebox
 import mysql.connector
+from connectorVariables import host, user, password, database, port
 
 
 def clickedsendotp():
@@ -29,8 +30,10 @@ def clickedsendotp():
         x = random.randint(1000, 9999)
         # getting the phone number of the registered user
         phonenoregistered = lstphonenoreset[indexofusername]
-        message = client.messages.create(body=x, from_='+17174290730', to=f'+{phonenoregistered}')
-        messagebox.showinfo('Reset Password', 'OTP has been sent to the registered mobile number')
+        message = client.messages.create(
+            body=x, from_='+17174290730', to=f'+{phonenoregistered}')
+        messagebox.showinfo(
+            'Reset Password', 'OTP has been sent to the registered mobile number')
 
 
 def clickedreset():
@@ -47,15 +50,19 @@ def clickedreset():
                             sql = f'UPDATE nameandpass SET Password = "{txtresetpass1.get()}" where Username = "{txtaskusernamereset.get()}";'
                             mycursor.execute(sql)
                             mydb.commit()
-                            messagebox.showinfo('Reset Password', 'Password updated successfully')
+                            messagebox.showinfo(
+                                'Reset Password', 'Password updated successfully')
                             import mysqlconnector
                             window.destroy()
                         else:
-                            messagebox.showinfo('Reset Password', 'Cannot use old password')
+                            messagebox.showinfo(
+                                'Reset Password', 'Cannot use old password')
                     else:
-                        messagebox.showinfo('Reset Password', 'Passwords do not match')
+                        messagebox.showinfo(
+                            'Reset Password', 'Passwords do not match')
                 else:
-                    messagebox.showinfo('Reset Password', 'Incorrect otp entered')
+                    messagebox.showinfo(
+                        'Reset Password', 'Incorrect otp entered')
             else:
                 messagebox.showinfo('Reset Password', 'Incorrect security key')
 
@@ -81,16 +88,21 @@ lblloginheading = Label(frame, text="Reset Password", font=("Helvetica Bold", 20
                         bg="#000834")
 lblloginheading.place(relx=0.29, rely=0.1)
 
-lblaskusername = Label(frame2, text="Username", font=("Ubuntu Light", 13), anchor="center", fg="white", bg="#000834")
+lblaskusername = Label(frame2, text="Username", font=(
+    "Ubuntu Light", 13), anchor="center", fg="white", bg="#000834")
 lblaskusername.place(relx=0.01, rely=0.1)
-lblasksecuritykey = Label(frame2, text="Security Key", font=("Ubuntu Light", 13), anchor="center", fg="white", bg="#000834")
+lblasksecuritykey = Label(frame2, text="Security Key", font=(
+    "Ubuntu Light", 13), anchor="center", fg="white", bg="#000834")
 lblasksecuritykey.place(relx=0.51, rely=0.1)
 
-lblaskotp = Label(frame2, text="Enter OTP", font=("Ubuntu Light", 13), anchor="center",  fg="white", bg="#000834")
+lblaskotp = Label(frame2, text="Enter OTP", font=(
+    "Ubuntu Light", 13), anchor="center",  fg="white", bg="#000834")
 lblaskotp.place(relx=0.04, rely=0.53)
-lblresetpass1 = Label(frame2, text="New Password", font=("Ubuntu Light", 13), anchor="center", fg="white", bg="#000834")
+lblresetpass1 = Label(frame2, text="New Password", font=(
+    "Ubuntu Light", 13), anchor="center", fg="white", bg="#000834")
 lblresetpass1.place(relx=0.01, rely=0.7)
-lblresetpass1confirm = Label(frame2, text="Confirm New Password", font=("Ubuntu Light", 13), anchor="center", fg="white", bg="#000834")
+lblresetpass1confirm = Label(frame2, text="Confirm New Password", font=(
+    "Ubuntu Light", 13), anchor="center", fg="white", bg="#000834")
 lblresetpass1confirm.place(relx=0.51, rely=0.7)
 
 # making text boxes to accept input from the user
@@ -98,7 +110,8 @@ lblresetpass1confirm.place(relx=0.51, rely=0.7)
 txtaskusernamereset = Entry(frame2)
 txtaskusernamereset.place(relx=0.04, rely=0.17, relwidth=0.4, relheight=0.05)
 txtasksecuritykeyreset = Entry(frame2)
-txtasksecuritykeyreset.place(relx=0.54, rely=0.17, relwidth=0.4, relheight=0.05)
+txtasksecuritykeyreset.place(
+    relx=0.54, rely=0.17, relwidth=0.4, relheight=0.05)
 txtaskotp = Entry(frame2)
 txtaskotp.place(relx=0.3, rely=0.53, relwidth=0.6, relheight=0.05)
 txtresetpass1 = Entry(frame2)
@@ -108,7 +121,8 @@ txtresetpass1confirm.place(relx=0.54, rely=0.77, relwidth=0.4, relheight=0.05)
 
 # connecting to mysql
 
-mydb = mysql.connector.connect(host="localhost", user="root", password="Sargun05", database='klimaccdata', port=3307)
+mydb = mysql.connector.connect(
+    host=host, user=user, password=password, database=database, port=port)
 mycursor = mydb.cursor()
 mycursor.execute('USE klimaccdata')
 mydb.commit()
@@ -133,9 +147,11 @@ for i in range(len(lstdata)):
     lstsecuritykeyreset.append(lstdata[i][3])
     lstphonenoreset.append(lstdata[i][4])
 
-btnsendotp = Button(frame2, text="Send OTP", font = ('Ubuntu Light', 12, 'bold'), fg="#000834", bg='#fb5b8d', command=clickedsendotp)
+btnsendotp = Button(frame2, text="Send OTP", font=(
+    'Ubuntu Light', 12, 'bold'), fg="#000834", bg='#fb5b8d', command=clickedsendotp)
 btnsendotp.place(relx=0.38, rely=0.324, relheight=0.1, relwidth=0.2)
-btnresetpass = Button(frame2, text="Reset",font = ('Ubuntu Light', 13, 'bold'), fg="#000834", bg='#fb5b8d', command=clickedreset)
+btnresetpass = Button(frame2, text="Reset", font=(
+    'Ubuntu Light', 13, 'bold'), fg="#000834", bg='#fb5b8d', command=clickedreset)
 btnresetpass.place(relx=0.38, rely=0.872, relheight=0.1, relwidth=0.2)
 
 window.mainloop()

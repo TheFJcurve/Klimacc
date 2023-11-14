@@ -2,15 +2,17 @@
 import tkinter as tk
 from tkinter import messagebox
 import mysql.connector
-
+from connectorVariables import host, user, password, database, port
 
 # verifying the login details by checking it with the ones previously stored after clicking the login button
+
 
 def clickedlogin():
     global count
     if count == 3:
         window.destroy()
-        messagebox.showinfo('Login In', 'too many incorrect tries, reset password')
+        messagebox.showinfo(
+            'Login In', 'too many incorrect tries, reset password')
         import forgotpass
     else:
         if txtusername.get() in lstusernames:
@@ -22,10 +24,12 @@ def clickedlogin():
                 window.destroy()
                 import mysqlconnector
             else:
-                messagebox.showinfo('Login In', f'Incorrect password, tries left {3 - count}')
+                messagebox.showinfo(
+                    'Login In', f'Incorrect password, tries left {3 - count}')
                 count = count + 1
         else:
-            messagebox.showinfo('Login In', 'Account does not exist with this username')
+            messagebox.showinfo(
+                'Login In', 'Account does not exist with this username')
 
 
 window = tk.Tk()
@@ -45,11 +49,14 @@ frame.place(relx=0.5, rely=0.25, relwidth=0.69, relheight=0.5, anchor='n')
 
 # adding the necessary headings and other formatting
 
-lblloginheading = tk.Label(frame1, text="User Login", font=("Helvetica Bold", 20), anchor="center", bg="#000834", fg="white")
+lblloginheading = tk.Label(frame1, text="User Login", font=(
+    "Helvetica Bold", 20), anchor="center", bg="#000834", fg="white")
 lblloginheading.place(relx=0.35, rely=0)
-lblusername = tk.Label(frame, text='Enter your username', font=('Ubuntu Light', 15), bg="#000834", fg="white")
+lblusername = tk.Label(frame, text='Enter your username', font=(
+    'Ubuntu Light', 15), bg="#000834", fg="white")
 lblusername.place(relx=0, rely=0.18)
-lblpassword = tk.Label(frame, text='Enter your password', font=('Ubuntu Light', 15), bg="#000834", fg="white")
+lblpassword = tk.Label(frame, text='Enter your password', font=(
+    'Ubuntu Light', 15), bg="#000834", fg="white")
 lblpassword.place(relx=0, rely=0.58)
 
 # making text boxes to accept input from the user
@@ -64,7 +71,8 @@ txtpassword.place(relx=0.01, rely=0.7, relwidth=0.98, relheight=0.09)
 # creating lists for checking conditions in password check
 lstusernamesandpasswords = []
 
-mydb = mysql.connector.connect(host="localhost", user="root", password="Sargun05", database='klimaccdata', port=3307)
+mydb = mysql.connector.connect(
+    host=host, user=user, password=password, database=database, port=port)
 mycursor = mydb.cursor()
 
 # getting the records of the registered users
@@ -84,7 +92,8 @@ print(lstusernames, lstpasswords)
 # defining count to calculate incorrect password tries
 count = 0
 
-btnlogin = tk.Button(canvas, text="Login", font = ('Ubuntu Light', 13), fg="white", bg='#000834', command=clickedlogin)
+btnlogin = tk.Button(canvas, text="Login", font=(
+    'Ubuntu Light', 13), fg="white", bg='#000834', command=clickedlogin)
 btnlogin.place(relx=0.4, rely=0.85, relheight=0.05, relwidth=0.2)
 
 window.mainloop()
