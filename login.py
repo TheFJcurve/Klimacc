@@ -1,8 +1,7 @@
 # defining the window interface
-import tkinter as tk
-from tkinter import messagebox
-import mysql.connector
-from connectorVariables import host, user, password, database, port
+import mysql.connector as mysql
+from variableValues import host, user, password, database, port, table
+from tkinter import messagebox, Tk, Canvas, Frame, Label, Entry, Button
 
 # verifying the login details by checking it with the ones previously stored after clicking the login button
 
@@ -32,38 +31,38 @@ def clickedlogin():
                 'Login In', 'Account does not exist with this username')
 
 
-window = tk.Tk()
+window = Tk()
 window.geometry("600x600")
 window.minsize(600, 600)
 window.maxsize(600, 600)
 window.title("Login Page")
-canvas = tk.Canvas(window, height=600, width=600, bg='#fb5b8d')
+canvas = Canvas(window, height=600, width=600, bg='#fb5b8d')
 canvas.pack()
 
-frame1 = tk.Frame(window, bg='#000834', bd=10)
+frame1 = Frame(window, bg='#000834', bd=10)
 frame1.place(relx=0.5, rely=0.06, relwidth=0.69, relheight=0.1, anchor='n')
 
 
-frame = tk.Frame(window, bg='#000834', bd=10)
+frame = Frame(window, bg='#000834', bd=10)
 frame.place(relx=0.5, rely=0.25, relwidth=0.69, relheight=0.5, anchor='n')
 
 # adding the necessary headings and other formatting
 
-lblloginheading = tk.Label(frame1, text="User Login", font=(
+lblloginheading = Label(frame1, text="User Login", font=(
     "Helvetica Bold", 20), anchor="center", bg="#000834", fg="white")
 lblloginheading.place(relx=0.35, rely=0)
-lblusername = tk.Label(frame, text='Enter your username', font=(
+lblusername = Label(frame, text='Enter your username', font=(
     'Ubuntu Light', 15), bg="#000834", fg="white")
 lblusername.place(relx=0, rely=0.18)
-lblpassword = tk.Label(frame, text='Enter your password', font=(
+lblpassword = Label(frame, text='Enter your password', font=(
     'Ubuntu Light', 15), bg="#000834", fg="white")
 lblpassword.place(relx=0, rely=0.58)
 
 # making text boxes to accept input from the user
 
-txtusername = tk.Entry(frame)
+txtusername = Entry(frame)
 txtusername.place(relx=0.01, rely=0.3, relwidth=0.98, relheight=0.09)
-txtpassword = tk.Entry(frame)
+txtpassword = Entry(frame)
 txtpassword.place(relx=0.01, rely=0.7, relwidth=0.98, relheight=0.09)
 
 # making the list of existing usernames and passwords using mysql
@@ -71,12 +70,14 @@ txtpassword.place(relx=0.01, rely=0.7, relwidth=0.98, relheight=0.09)
 # creating lists for checking conditions in password check
 lstusernamesandpasswords = []
 
-mydb = mysql.connector.connect(
+mydb = mysql.connect(
     host=host, user=user, password=password, database=database, port=port)
 mycursor = mydb.cursor()
 
 # getting the records of the registered users
-mycursor.execute("SELECT * FROM nameandpass")
+mycursor.execute(
+    f"CREATE TABLE IF NOT EXISTS {table} (Name Varchar(50), Username Varchar(50), Password Varchar(50), SecurityKey Varchar(20), Phoneno Numeric(13));")
+mycursor.execute(f"SELECT * FROM {table}")
 myresult = mycursor.fetchall()
 for x in myresult:
     lstusernamesandpasswords.append(list(x))
@@ -92,7 +93,7 @@ print(lstusernames, lstpasswords)
 # defining count to calculate incorrect password tries
 count = 0
 
-btnlogin = tk.Button(canvas, text="Login", font=(
+btnlogin = Button(canvas, text="Login", font=(
     'Ubuntu Light', 13), fg="white", bg='#000834', command=clickedlogin)
 btnlogin.place(relx=0.4, rely=0.85, relheight=0.05, relwidth=0.2)
 

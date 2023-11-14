@@ -1,10 +1,11 @@
 # number is +17174290730
 
-import mysql.connector
-from tkinter import *
+import random
 from tkinter import messagebox
-import twilio
-from connectorVariables import host, user, password, database, port
+from twilio.rest import Client
+import mysql.connector as mysql
+from tkinter import Tk, Canvas, Frame, Label, Entry, Button
+from variableValues import host, user, password, database, port
 
 
 def clickedsendotp():
@@ -20,11 +21,9 @@ def clickedsendotp():
         # getting the stored password for use in resetpage
         global oldpassword
         oldpassword = lstpasswordsreset[indexofusername]
-        from twilio.rest import Client
         accountsid = 'AC6d502dd14d7cf89e864d81d15e55b2d1'
         authtoken = 'c76df270ca3c94af92562587306b03fe'
         client = Client(accountsid, authtoken)
-        import random
         global x
         x = random.randint(1000, 9999)
         # getting the phone number of the registered user
@@ -120,7 +119,7 @@ txtresetpass1confirm.place(relx=0.54, rely=0.77, relwidth=0.4, relheight=0.05)
 
 # connecting to mysql
 
-mydb = mysql.connector.connect(
+mydb = mysql.connect(
     host=host, user=user, password=password, database=database, port=port)
 mycursor = mydb.cursor()
 mycursor.execute('USE klimaccdata')

@@ -1,11 +1,10 @@
+import webbrowser
+import requests
 import mysql.connector as mysql
 import matplotlib.pyplot as plt
-from tkinter import *
-import requests
-import webbrowser
-import Image
-import ImageTk
-from connectorVariables import host, user, password, database, port
+from PIL import Image, ImageTk
+from tkinter import Tk, Canvas, Frame, Label, Entry, Button
+from variableValues import host, user, password, database, port, APIkey, APIurl
 
 
 def clickedlocation():
@@ -21,8 +20,8 @@ def clickedlocation():
 
 def get_weather():
     """According to the user's inputed location, this function interacts with the API to get info of that place"""
-    weather_key = '15c0fbbd005a78217416150b445c720e'
-    url = 'https://api.openweathermap.org/data/2.5/forecast'
+    weather_key = APIkey
+    url = APIurl
     params = {'APPID': weather_key, 'q': user_location, 'units': 'Metric'}
     response = requests.get(url, params=params)
     weather = response.json()
@@ -63,7 +62,7 @@ def mysqlmaking():
     """Creates the databases and the table"""
     global mydb
     mydb = mysql.connect(host=host, user=user,
-                         password=password, datababse=database, port=port)
+                         password=password, database=database, port=port)
     mycur = mydb.cursor(buffered=True)
     mycur.execute("create database if not exists klimaccdata;")
     mycur.execute("use klimaccdata;")

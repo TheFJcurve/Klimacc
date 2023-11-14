@@ -1,6 +1,5 @@
-from tkinter import *
-import Image
-import ImageTk
+from PIL import Image, ImageTk
+from tkinter import Tk, Canvas, Frame, Label, Button
 
 
 def clickedexisting():

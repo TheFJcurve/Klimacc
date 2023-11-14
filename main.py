@@ -1,9 +1,8 @@
 # making the introductory window
-import mysql.connector
-from tkinter import *
-import Image
-import ImageTk
-from connectorVariables import host, user, password, database, port
+import mysql.connector as mysql
+from PIL import Image, ImageTk
+from tkinter import Tk, Canvas, Frame, Label, Button
+from variableValues import host, user, password, database, port
 
 
 def clickednext():
@@ -42,10 +41,10 @@ btnnext.place(relx=0.8, rely=0.9, relwidth=0.18, relheight=0.07)
 
 # connecting to mysql to creating the databases required for further purposes
 
-mydb = mysql.connector.connect(
-    host=host, user=user, password=password, database=database, port=port)
+mydb = mysql.connect(
+    host=host, user=user, password=password, port=port)
 mycursor = mydb.cursor()
 mycursor = mydb.cursor(buffered=True)
-mycursor.execute("Create database if not exists klimaccdata")
+mycursor.execute(f"CREATE DATABASE IF NOT EXISTS {database}")
 
 window.mainloop()

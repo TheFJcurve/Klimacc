@@ -1,8 +1,7 @@
 # checking the password matching condition
-from tkinter import messagebox
-from tkinter import *
-import mysql.connector
-from connectorVariables import host, user, password, database, port
+import mysql.connector as mysql
+from variableValues import host, user, password, database, port, table
+from tkinter import Tk, Canvas, Frame, Label, Entry, Button, messagebox
 
 
 def clickedsignupfree():
@@ -10,7 +9,7 @@ def clickedsignupfree():
         if not txtfullname.get() == "" and not txtusername.get() == '' and not txtsecuritykey.get() == '' and not txtphoneno.get() == '' and not txtpassword.get() == '' and not txtconfirmpassword.get() == '':
             if txtpassword.get() == txtconfirmpassword.get():
                 if txtusername.get() not in lstusernames:
-                    sql = f'INSERT INTO nameandpass VALUES ("{txtfullname.get()}","{txtusername.get()}","{txtpassword.get()}","{txtsecuritykey.get()}",{txtphoneno.get()})'
+                    sql = f'INSERT INTO {table} VALUES ("{txtfullname.get()}", "{txtusername.get()}", "{txtpassword.get()}", "{txtsecuritykey.get()}", {txtphoneno.get()});'
                     mycur2.execute(sql)
                     mydb.commit()
                     messagebox.showinfo(
@@ -86,20 +85,19 @@ txtconfirmpassword.place(relx=0.53, rely=0.85, relwidth=0.45, relheight=0.08)
 lstusernamesandpasswords = []
 
 # connecting to mysql
-mydb = mysql.connector.connect(
+mydb = mysql.connect(
     host=host, user=user, password=password, database=database, port=port)
 mycursor = mydb.cursor()
-mycursor.execute('USE klimaccdata')
 
 # creating table using the existing condition
 mycur2 = mydb.cursor(buffered=True)
 mycur2.execute(
-    'Create table if not exists nameandpass (Name Varchar(50), Username Varchar(50), Password Varchar(50), SecurityKey Varchar(20), Phoneno Numeric(13));')
+    f"CREATE TABLE IF NOT EXISTS {table} (Name Varchar(50), Username Varchar(50), Password Varchar(50), SecurityKey Varchar(20), Phoneno Numeric(13));")
 
 mydb.commit()
 
 # getting the records of the registered users
-mycursor.execute("SELECT * FROM nameandpass")
+mycursor.execute(f"SELECT * FROM {table}")
 myresult = mycursor.fetchall()
 for x in myresult:
     lstusernamesandpasswords.append(list(x))
