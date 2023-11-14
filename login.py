@@ -13,7 +13,7 @@ def clickedlogin():
         window.destroy()
         messagebox.showinfo(
             'Login In', 'too many incorrect tries, reset password')
-        import forgotpass
+        import forgotPassword
     else:
         if txtusername.get() in lstusernames:
             indexofusername = lstusernames.index(txtusername.get())
@@ -22,7 +22,7 @@ def clickedlogin():
                 count = -1
                 messagebox.showinfo('Login In', 'Login successful')
                 window.destroy()
-                import mysqlconnector
+                import connectToDatabase
             else:
                 messagebox.showinfo(
                     'Login In', f'Incorrect password, tries left {3 - count}')
