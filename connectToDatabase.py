@@ -4,7 +4,50 @@ import mysql.connector as mysql
 import matplotlib.pyplot as plt
 from PIL import Image, ImageTk
 from tkinter import Tk, Canvas, Frame, Label, Entry, Button
-from variableValues import host, user, password, database, port, APIkey, APIurl
+from variableValues import host, user, password, port, database, table_user, table_renewables, APIkey, APIurl
+
+
+def establish_connection():
+    """
+    Establishes the connection with the database, sets up the database and tables, and returns the cursor.
+    """
+
+    # Creating the Connection and the Cursor
+    mydb = mysql.connect(
+        host=host,
+        user=user,
+        password=password,
+        port=port
+    )
+    mycursor = mydb.cursor(buffered=True)
+
+    # Creating all the important Structures
+    mycursor.execute(
+        f"CREATE DATABASE IF NOT EXISTS {database};"
+    )
+    mycursor.execute(
+        f"USE {database};"
+    )
+    mycursor.execute(
+        f"""
+        CREATE TABLE IF NOT EXISTS {table_user} 
+        (NAME Varchar(50), 
+        USERNAME Varchar(50), 
+        PASSWORD Varchar(50), 
+        SECURITYKEY Varchar(20), 
+        PHONENUMBER Numeric(13));
+        """
+    )
+    mycursor.execute(
+        f"""
+        CREATE TABLE IF NOT EXISTS {table_renewables} 
+        (NAME varchar(20) primary key, 
+        TEMPERATUREDEGREE int, 
+        HUMIDITYPERCENTAGE int, 
+        WIND int);
+        """
+    )
+    return mycursor
 
 
 def clickedlocation():
