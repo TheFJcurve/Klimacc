@@ -1,6 +1,6 @@
 # defining the window interface
 import mysql.connector as mysql
-from variableValues import host, user, password, database, port, table
+from variableValues import host, user, password, database, port, table_user, table_renewables
 from tkinter import messagebox, Tk, Canvas, Frame, Label, Entry, Button
 
 # verifying the login details by checking it with the ones previously stored after clicking the login button

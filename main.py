@@ -1,6 +1,8 @@
 # making the introductory window
+
+# Importing the Necessary Modules
 from formattedWindows import main_window
-from connectToDatabase import establish_connection
+from establishConnection import establish_connection
 
 
 def clickednext(window):
