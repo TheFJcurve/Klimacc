@@ -61,13 +61,13 @@ class KlimaccWindow(Tk):
             anchor=anchor
         )
 
-    def create_heading(self, headingName, parentFrame, message, relx, rely, fontName=boldFont, fontSize=20, backGroundColor=darkBlue, foreGroundColor=white, anchor='center'):
+    def create_heading(self, headingName, parent, message, relx, rely, fontName=boldFont, fontSize=20, backGroundColor=darkBlue, foreGroundColor=white, anchor='center'):
         """
         Adding the Heading in the Window
         """
 
         self.headingName = Label(
-            master=parentFrame,
+            master=parent,
             text=message,
             font=(
                 fontName,
@@ -82,9 +82,9 @@ class KlimaccWindow(Tk):
             rely=rely
         )
 
-    def create_label(self, labelName, parentFrame, image, relx, rely, relheight, relwidth):
+    def create_label(self, labelName, parent, image, relx, rely, relheight, relwidth):
         self.labelName = Label(
-            master=parentFrame,
+            master=parent,
             image=image
         )
         self.labelName.place(
@@ -94,11 +94,11 @@ class KlimaccWindow(Tk):
             relwidth=relwidth
         )
 
-    def create_button(self, buttonName, parentCanvas, message, command, relx, rely, relwidth, relheight, fontName=normalFont, fontSize=15, foreGroundColor=white, backGroundColor=darkBlue,):
+    def create_button(self, buttonName, parent, message, command, relx, rely, relwidth, relheight, fontName=normalFont, fontSize=15, foreGroundColor=white, backGroundColor=darkBlue,):
         """
         """
         self.buttonName = Button(
-            master=parentCanvas,
+            master=parent,
             text=message,
             font=(
                 fontName,
@@ -150,7 +150,7 @@ def main_window(buttonFunction):
     # Defining the Heading
     main_heading = window.create_heading(
         headingName='main_heading',
-        parentFrame=upper_frame,
+        parent=upper_frame,
         message='Welcome to Klimacc',
         relx=0.28,
         rely=0.07
@@ -159,7 +159,7 @@ def main_window(buttonFunction):
     # Defining the Button that takes us to the next page
     next_button = window.create_button(
         buttonName='next_button',
-        parentCanvas=canvas,
+        parent=canvas,
         message="Next",
         command=lambda: buttonFunction(window),
         relx=0.42,
@@ -176,7 +176,7 @@ def main_window(buttonFunction):
     # Defining the Background Label for the Image
     background_label = window.create_label(
         labelName='background_label',
-        parentFrame=lower_frame,
+        parent=lower_frame,
         image=background_image,
         relx=0.154,
         rely=0.2,
@@ -193,84 +193,49 @@ def login_and_signup_window(buttonFunction1, buttonFunction2):
     """
 
     # Making the introductory window
-    window = Tk()
-    window.title("Klimacc : One Click to Sustainaibility")
-    window.minsize(
-        minWindowLength,
-        minWindowBreadth
-    )
-    window.maxsize(
-        maxWindowLength,
-        maxWindowBreadth
-    )
+    window = KlimaccWindow()
 
     # Defining the Canvas on the Window
-    canvas = Canvas(
-        window,
-        height=windowLength,
-        width=windowBreadth,
-        bg=pink
+    canvas = window.create_canvas(
+        canvasName='canvas'
     )
-    canvas.pack()
 
     # formatting the elements in the window
-    frame = Frame(
-        window,
-        bg=darkBlue,
-        bd=5
-    )
-    frame.place(
+    upper_frame = window.create_frame(
+        frameName='upper_frame',
         relx=0.5,
         rely=0.05,
         relwidth=0.69,
         relheight=0.17,
-        anchor='n'
     )
 
     # adding the heading and quote on upper frame
-    lblheading = Label(
-        frame,
-        text="Welcome to Klimacc",
-        font=(
-            "Helvetica Bold",
-            20
-        ),
-        anchor="center",
-        bg=darkBlue,
-        fg=white
-    )
-    lblheading.place(
+    main_heading = window.create_heading(
+        headingName='main_heading',
+        parent=upper_frame,
+        message='Welcome to Klimacc',
         relx=0.195,
         rely=0.05
     )
-    lblquote = Label(
-        frame,
-        text="Your Safety is our Priority!",
-        font=(
-            "Ubuntu Light",
-            10
-        ),
-        anchor="center",
-        bg=darkBlue,
-        fg=white
-    )
-    lblquote.place(
+
+    main_quote = window.create_heading(
+        headingName='main_quote',
+        parent=upper_frame,
+        message='Your Safety is our Priority!',
         relx=0.32,
-        rely=0.6
+        rely=0.6,
+        fontName=normalFont,
+        fontSize=10,
+        anchor='center'
     )
 
     # making lower frame
-    frame2 = Frame(
-        window,
-        bg=darkBlue,
-        bd=5
-    )
-    frame2.place(
+    lower_frame = window.create_frame(
+        frameName='lower_frame',
         relx=0.5,
         rely=0.3,
         relwidth=0.69,
         relheight=0.6,
-        anchor='n'
     )
 
     # importing, resizing and using background image
@@ -278,66 +243,60 @@ def login_and_signup_window(buttonFunction1, buttonFunction2):
     background_image = background_image.resize((150, 150))
     background_image = ImageTk.PhotoImage(background_image)
 
-    background_label1 = Label(frame2, image=background_image)
-    background_label1.place(relx=0.1, rely=0.3, relheight=0.35, relwidth=0.35)
+    # Creating Labels for Images
+    first_image = window.create_label(
+        labelName='first_image',
+        parent=lower_frame,
+        image=background_image,
+        relx=0.1,
+        rely=0.3,
+        relheight=0.35,
+        relwidth=0.35
+    )
 
-    background_label2 = Label(frame2, image=background_image)
-    background_label2.place(relx=0.55, rely=0.3, relheight=0.35, relwidth=0.35)
+    second_image = window.create_label(
+        labelName='second_image',
+        parent=lower_frame,
+        image=background_image,
+        relx=0.55,
+        rely=0.3,
+        relheight=0.35,
+        relwidth=0.35
+    )
 
     # making heading on lower frame
-    lblheading = Label(
-        frame2,
-        text="Join Klimacc!",
-        font=(
-            "Helvetica Bold",
-            20
-        ),
-        anchor="center",
-        bg=darkBlue,
-        fg=white
-    )
-    lblheading.place(
+    lower_main_heading = window.create_heading(
+        headingName='lower_main_heading',
+        parent=lower_frame,
+        message='Join Klimacc!',
         relx=0.3,
-        rely=0.01
+        rely=0.01,
+        anchor='center'
     )
 
     # making the login and sign in buttons
-    btnloginexisting = Button(
-        frame2,
-        text="Sign In",
-        font=(
-            'Ubuntu Light',
-            13,
-            'bold'
-        ),
-        fg=darkBlue,
-        bg=pink,
-        command=lambda: buttonFunction1(window)
-    )
-    btnloginexisting.place(
+    sign_in_button = window.create_button(
+        buttonName='sign_in_button',
+        parent=canvas,
+        message="Sign In",
+        command=lambda: buttonFunction1(window),
         relx=0.17,
         rely=0.75,
+        relwidth=0.2,
         relheight=0.1,
-        relwidth=0.2
+        fontSize=13
     )
 
-    btnloginnewuser = Button(
-        frame2,
-        text="Sign Up",
-        font=(
-            'Ubuntu Light',
-            13,
-            'bold'
-        ),
-        fg=darkBlue,
-        bg=pink,
-        command=lambda: buttonFunction2(window)
-    )
-    btnloginnewuser.place(
+    sign_up_button = window.create_button(
+        buttonName='sign_up_button',
+        parent=canvas,
+        message="Sign Up",
+        command=lambda: buttonFunction2(window),
         relx=0.625,
         rely=0.75,
+        relwidth=0.2,
         relheight=0.1,
-        relwidth=0.2
+        fontSize=13
     )
 
     window.mainloop()
