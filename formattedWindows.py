@@ -118,7 +118,7 @@ class KlimaccWindow(Tk):
 
 # Defining Windows for each step of the program
 
-def main_window(buttonFunction):
+def mainWindow(buttonFunction):
     """
     Takes the window size constraints and creates the main window of the program.
     """
@@ -187,7 +187,7 @@ def main_window(buttonFunction):
     window.mainloop()
 
 
-def login_and_signup_window(buttonFunction1, buttonFunction2):
+def userWrapperWindow(buttonFunction1, buttonFunction2):
     """
     Takes the window size constraints and creates the window containing options for both Login and Sign Up.
     """

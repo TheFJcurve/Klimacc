@@ -1,18 +1,14 @@
 # making the introductory window
 
 # Importing the Necessary Modules
-from formattedWindows import main_window
+from formattedWindows import mainWindow
 from establishConnection import establish_connection
-
-
-def clickednext(window):
-    window.destroy()
-    import userWrapper
+from buttonFunction import mainPageButton
 
 
 if __name__ == "__main__":
     # Creating the Window
-    main_window(clickednext)
+    mainWindow(mainPageButton)
 
     # connecting to mysql to creating the databases required for further purposes
     mycursor = establish_connection()

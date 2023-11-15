@@ -1,14 +1,4 @@
-from formattedWindows import login_and_signup_window
+from formattedWindows import userWrapperWindow
+from buttonFunction import userWrapperSignIn, userWrapperSignUp
 
-
-def clickedexisting(window):
-    window.destroy()
-    import login
-
-
-def clickednewuser(window):
-    window.destroy()
-    import signUp
-
-
-login_and_signup_window(clickedexisting, clickednewuser)
+userWrapperWindow(userWrapperSignIn, userWrapperSignUp)
