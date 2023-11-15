@@ -1,5 +1,3 @@
-from PIL import Image, ImageTk
-from tkinter import Tk, Canvas, Frame, Label, Button
 from formattedWindows import login_and_signup_window
 
 

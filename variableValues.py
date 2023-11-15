@@ -25,3 +25,8 @@ minWindowBreadth = 600
 pink = '#fb5b8d'
 darkBlue = '#000834'
 white = 'white'
+
+# Text Variables
+normalFont = 'Ubuntu Light'
+boldFont = 'Helvetica Bold'
+appTitle = r"Klimacc : One Click to Sustainaibility"

@@ -10,8 +10,9 @@ def clickednext(window):
     import userWrapper
 
 
-# Creating the Window
-main_window(clickednext)
+if __name__ == "__main__":
+    # Creating the Window
+    main_window(clickednext)
 
-# connecting to mysql to creating the databases required for further purposes
-mycursor = establish_connection()
+    # connecting to mysql to creating the databases required for further purposes
+    mycursor = establish_connection()
