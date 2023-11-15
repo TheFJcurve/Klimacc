@@ -82,14 +82,14 @@ class KlimaccWindow(Tk):
             rely=rely
         )
 
-    def create_label(self, labelName, parentFrame, image, x, y, relheight, relwidth):
+    def create_label(self, labelName, parentFrame, image, relx, rely, relheight, relwidth):
         self.labelName = Label(
             master=parentFrame,
             image=image
         )
         self.labelName.place(
-            x=x,
-            y=y,
+            relx=relx,
+            rely=rely,
             relheight=relheight,
             relwidth=relwidth
         )
@@ -148,17 +148,17 @@ def main_window(buttonFunction):
     )
 
     # Defining the Heading
-    lblheading = window.create_heading(
-        headingName='lblheading',
+    main_heading = window.create_heading(
+        headingName='main_heading',
         parentFrame=upper_frame,
         message='Welcome to Klimacc',
-        relx=0.99,
-        rely=1
+        relx=0.28,
+        rely=0.07
     )
 
     # Defining the Button that takes us to the next page
-    btnnext = window.create_button(
-        buttonName='btnnext',
+    next_button = window.create_button(
+        buttonName='next_button',
         parentCanvas=canvas,
         message="Next",
         command=lambda: buttonFunction(window),
@@ -168,21 +168,21 @@ def main_window(buttonFunction):
         relheight=0.07
     )
 
-    # # Inserting the Background Image
-    # background_image = Image.open(R"klimacclogo.jpeg")
-    # background_image = background_image.resize((400, 400))
-    # background_image = ImageTk.PhotoImage(background_image)
+    # Inserting the Background Image
+    background_image = Image.open(R"klimacclogo.jpeg")
+    background_image = background_image.resize((400, 400))
+    background_image = ImageTk.PhotoImage(background_image)
 
-    # # Defining the Background Label for the Image
-    # background_label = window.create_label(
-    #     labelName='background_label',
-    #     parentFrame=lower_frame,
-    #     image=background_image,
-    #     x=0,
-    #     y=0,
-    #     relheight=1,
-    #     relwidth=1
-    # )
+    # Defining the Background Label for the Image
+    background_label = window.create_label(
+        labelName='background_label',
+        parentFrame=lower_frame,
+        image=background_image,
+        relx=0.154,
+        rely=0.2,
+        relheight=0.69,
+        relwidth=0.69
+    )
 
     window.mainloop()
 
