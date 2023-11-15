@@ -7,7 +7,7 @@ from establishConnection import establish_connection
 
 def clickednext(window):
     window.destroy()
-    import finalLoginAndSignUp
+    import userWrapper
 
 
 # Creating the Window
