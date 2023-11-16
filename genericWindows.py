@@ -82,10 +82,14 @@ class KlimaccWindow(Tk):
             rely=rely
         )
 
-    def create_label(self, labelName, parent, image, relx, rely, relheight, relwidth):
+    def create_label(self, labelName, parent, image, relx, rely, relheight, relwidth, fontName=normalFont, fontSize=15):
         self.labelName = Label(
             master=parent,
-            image=image
+            image=image,
+            font=(
+                fontName,
+                fontSize
+            )
         )
         self.labelName.place(
             relx=relx,
@@ -115,8 +119,22 @@ class KlimaccWindow(Tk):
             relheight=relheight
         )
 
+    def create_entry(self, entryName, parent, relx, rely, relwidth, relheight):
+        """
+        """
+
+        self.entryName = Entry(
+            master=parent
+        )
+        self.entryName.place(
+            relx=relx,
+            rely=rely,
+            relwidth=relwidth,
+            relheight=relheight
+        )
 
 # Defining Windows for each step of the program
+
 
 def mainWindow(buttonFunction):
     """
@@ -297,6 +315,92 @@ def userWrapperWindow(buttonFunction1, buttonFunction2):
         relwidth=0.2,
         relheight=0.1,
         fontSize=13
+    )
+
+    window.mainloop()
+
+
+def loginWindow(buttonFunction):
+    """
+    """
+
+    window = KlimaccWindow(message="Login Page")
+
+    canvas = window.create_canvas(
+        canvasName="canvas"
+    )
+
+    upper_frame = window.create_frame(
+        frameName="upper_frame",
+        relx=0.5,
+        rely=0.06,
+        relwidth=0.69,
+        relheight=0.1,
+    )
+
+    lower_frame = window.create_frame(
+        frameName="lower_frame",
+        relx=0.5,
+        rely=0.25,
+        relwidth=0.69,
+        relheight=0.5,
+    )
+
+    # adding the necessary headings and other formatting
+
+    heading_label = window.create_heading(
+        headingName="heading_label",
+        parent=upper_frame,
+        message="User Login",
+        relx=0.35,
+        rely=0
+    )
+
+    username_label = window.create_heading(
+        headingName="username_label",
+        parent=lower_frame,
+        message="Enter Your Username",
+        relx=0,
+        rely=0.18
+    )
+
+    password_label = window.create_heading(
+        headingName="password_label",
+        parent=lower_frame,
+        message="Enter Your Passowrd",
+        relx=0,
+        rely=0.58
+    )
+
+    # making text boxes to accept input from the user
+
+    username_text = window.create_entry(
+        entryName="username_text",
+        parent=lower_frame,
+        relx=0.01,
+        rely=0.3,
+        relwidth=0.98,
+        relheight=0.09
+    )
+
+    password_text = window.create_entry(
+        entryName="password_text",
+        parent=lower_frame,
+        relx=0.01,
+        rely=0.7,
+        relwidth=0.98,
+        relheight=0.09
+    )
+
+    button_login = window.create_button(
+        buttonName="button_login",
+        parent=canvas,
+        message="Login",
+        command=buttonFunction,
+        relx=0.4,
+        rely=0.85,
+        relheight=0.05,
+        relwidth=0.2
     )
 
     window.mainloop()
