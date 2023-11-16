@@ -1,7 +1,7 @@
 # making the introductory window
 
 # Importing the Necessary Modules
-from formattedWindows import mainWindow
+from genericWindows import mainWindow
 from establishConnection import establish_connection
 from buttonFunction import mainPageButton
 

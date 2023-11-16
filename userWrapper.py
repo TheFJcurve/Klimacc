@@ -1,4 +1,4 @@
-from formattedWindows import userWrapperWindow
-from buttonFunction import userWrapperSignIn, userWrapperSignUp
+from genericWindows import userWrapperWindow
+from buttonFunction import userWrapperSignInButton, userWrapperSignUpButton
 
-userWrapperWindow(userWrapperSignIn, userWrapperSignUp)
+userWrapperWindow(userWrapperSignInButton, userWrapperSignUpButton)
