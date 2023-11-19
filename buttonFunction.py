@@ -67,6 +67,12 @@ def signUpButton(window):
             import login
 
 
-def userWrapperSignUp(window):
-    window.destroy()
-    import signUp
+def locationFinderButton():
+    """When the user inputs location, the location is stored and the tab is closed"""
+    global user_location
+    user_location = location_user.get()
+    user_location = str(user_location).capitalize()
+    if user_location == "":
+        pass
+    else:
+        get_weather()
