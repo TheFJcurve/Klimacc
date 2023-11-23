@@ -46,13 +46,13 @@ def establishConnection():
     return mycursor
 
 
-def signUpQueries():
+def loginQueries():
     # creating lists for checking conditions in password check
     lstusernamesandpasswords = []
 
     mycursor = establish_connection()
     mycursor.execute(
-        f"""CREATE TABLE IF NOT EXISTS {table} 
+        f"""CREATE TABLE IF NOT EXISTS {table_user} 
         (Name Varchar(50), 
         Username Varchar(50),
         Password Varchar(50), 
@@ -62,7 +62,7 @@ def signUpQueries():
 
     # getting the records of the registered users
     mycursor.execute(
-        f"SELECT * FROM {table}"
+        f"SELECT * FROM {table_user}"
     )
     myresult = mycursor.fetchall()
     for x in myresult:
@@ -80,37 +80,35 @@ def signUpQueries():
     return (lstusernames, lstfullname)
 
 
-def loginQueries():
-
-    lstusernamesandpasswords = []
+def signUpQueries():
 
     mycursor = establish_connection()
-
-    # making the list of existing usernames and passwords using mysql
-
-    # getting the records of the registered users
     mycursor.execute(
-        f"SELECT * FROM {table_user}"
+        f"""CREATE TABLE IF NOT EXISTS {table_user} 
+        (Name Varchar(50), 
+        Username Varchar(50),
+        Password Varchar(50), 
+        SecurityKey Varchar(20), 
+        Phoneno Numeric(13));"""
     )
-    myresult = mycursor.fetchall()
-    for x in myresult:
-        lstusernamesandpasswords.append(list(x))
 
-    # making a separate list of usernames and passwords
-    lstusernames = []
-    lstpasswords = []
+    mycursor.execute(
+        f"""INSERT INTO {table_user} VALUES 
+        ("{txtfullname.get()}", 
+        "{txtusername.get()}",
+        "{txtpassword.get()}", 
+        "{txtsecuritykey.get()}", 
+        {txtphoneno.get()});"""
+    )
 
-    for i in range(len(lstusernamesandpasswords)):
-        lstusernames.append(lstusernamesandpasswords[i][1])
-        lstpasswords.append(lstusernamesandpasswords[i][2])
+    messagebox.showinfo(
+        'Message title', 'Successfully signed up!'
+    )
 
-    print(lstusernames, lstpasswords)
-
-    # defining count to calculate incorrect password tries
-    count = 0
+    mycursor.close()
 
 
-def getLocationWeather():
+def getLocationWeather(user_location):
     """According to the user's inputed location, this function interacts with the API to get info of that place"""
     weather_key = APIkey
     url = APIurl

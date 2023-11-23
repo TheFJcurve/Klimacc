@@ -30,3 +30,6 @@ white = 'white'
 normalFont = 'Ubuntu Light'
 boldFont = 'Helvetica Bold'
 appTitle = r"Klimacc : One Click to Sustainaibility"
+
+# Other Variables
+login_tries = 3

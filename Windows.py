@@ -610,7 +610,7 @@ def locationFinderWindow(buttonFunction):
     window.mainloop()
 
 
-def locationDataWindow(buttonFunction):
+def locationDataWindow(buttonFunction1, buttonFunction2):
     window = KlimaccWindow(
         message="View Data Regarding Your Location!"
     )
@@ -671,7 +671,7 @@ def locationDataWindow(buttonFunction):
         buttonName="graph_button",
         parent=lower_frame,
         message="Show the Graphs",
-        command=buttonFunction,
+        command=buttonFunction1,
         relx=0.62,
         rely=0.15,
         relheight=0.09,
@@ -719,7 +719,7 @@ def locationDataWindow(buttonFunction):
         buttonName="renewable_button",
         parent=lower_frame,
         message="Show Info of all the Compatible Renewables",
-        command=buttonFunction,
+        command=buttonFunction2,
         relx=0.47,
         rely=0.85,
         relheight=0.09,
@@ -739,7 +739,7 @@ def locationDataWindow(buttonFunction):
     window.mainloop()
 
 
-def forgotPasswordWindow(buttonFunction):
+def forgotPasswordWindow(buttonFunction1, buttonFunction2):
 
     window = KlimaccWindow(
         message="Reset Password"
@@ -867,7 +867,7 @@ def forgotPasswordWindow(buttonFunction):
         buttonName="button_submit_otp",
         parent=canvas,
         message="Submit OTP",
-        command=buttonFunction,
+        command=buttonFunction1,
         relx=0.38,
         rely=0.324,
         relheight=0.1,
@@ -878,7 +878,7 @@ def forgotPasswordWindow(buttonFunction):
         buttonName="button_reset_password",
         parent=canvas,
         message="Reset Password",
-        command=buttonFunction,
+        command=buttonFunction2,
         relx=0.38,
         rely=0.872,
         relheight=0.1,

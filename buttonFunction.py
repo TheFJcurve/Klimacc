@@ -1,5 +1,8 @@
 # Given a particular button and page, this will give instruction on what to do once the button is pressed
 
+from variableValues import login_tries
+from Queries import signUpQueries
+
 
 def mainPageButton(window):
     window.destroy()
@@ -17,25 +20,29 @@ def userWrapperSignUpButton(window):
 
 
 def loginButton(window):
-    global count
-    if count == 3:
+    """
+    When the user inputs username and password, the username and password is stored and the tab is closed
+    """
+
+    if login_tries == 0:
         window.destroy()
         messagebox.showinfo(
-            'Login In', 'too many incorrect tries, reset password')
+            'Login In', 'Too many incorrect tries, Reset Password')
         import forgotPassword
     else:
         if txtusername.get() in lstusernames:
             indexofusername = lstusernames.index(txtusername.get())
             passwordatindex = lstpasswords[indexofusername]
             if txtpassword.get() == passwordatindex:
-                count = -1
+                login_tries = -1
                 messagebox.showinfo('Login In', 'Login successful')
                 window.destroy()
                 import connectToDatabase
             else:
+                login_tries -= 1
                 messagebox.showinfo(
-                    'Login In', f'Incorrect password, tries left {3 - count}')
-                count = count + 1
+                    'Login In', f'Incorrect password, tries left {login_tries}')
+                login
         else:
             messagebox.showinfo(
                 'Login In', 'Account does not exist with this username')
@@ -43,14 +50,17 @@ def loginButton(window):
 
 def signUpButton(window):
     if txtfullname.get not in lstfullname:
-        if not txtfullname.get() == "" and not txtusername.get() == '' and not txtsecuritykey.get() == '' and not txtphoneno.get() == '' and not txtpassword.get() == '' and not txtconfirmpassword.get() == '':
-            if txtpassword.get() == txtconfirmpassword.get():
-                if txtusername.get() not in lstusernames:
-                    sql = f'INSERT INTO {table} VALUES ("{txtfullname.get()}", "{txtusername.get()}", "{txtpassword.get()}", "{txtsecuritykey.get()}", {txtphoneno.get()});'
-                    mycur2.execute(sql)
-                    mydb.commit()
-                    messagebox.showinfo(
-                        'Message title', 'Successfully signed up!')
+        if (
+            (not txtfullname.get() == "") and
+            (not txtusername.get() == "") and
+            (not txtsecuritykey.get() == "") and
+            (not txtphoneno.get() == "") and
+            (not txtpassword.get() == "") and
+            (not txtconfirmpassword.get() == "")
+        ):
+            if (txtpassword.get() == txtconfirmpassword.get()):
+                if (txtusername.get() not in lstusernames):
+                    signUpQueries()
                     window.destroy()
                     import login
                 elif txtusername.get() in lstusernames:
@@ -67,21 +77,27 @@ def signUpButton(window):
             import login
 
 
-def locationFinderButton():
-    """When the user inputs location, the location is stored and the tab is closed"""
-    global user_location
+def locationFinderButton(window):
+    """
+    When the user inputs location, the location is stored and the tab is closed
+    """
+
     user_location = location_user.get()
     user_location = str(user_location).capitalize()
+
     if user_location == "":
         pass
     else:
-        get_weather()
+        get_weather(user_location)
 
 
-def sendOTPButton():
-    if txtaskusernamereset.get() == '' or txtasksecuritykeyreset == '':
+def sendOTPButton(window):
+    if (
+        (txtaskusernamereset.get() == "") or
+        (txtasksecuritykeyreset.get() == "")
+    ):
         messagebox.showinfo('Reset Password', 'Fields cannot be left blank')
-    elif txtaskusernamereset.get() not in lstusernamesreset:
+    elif (txtaskusernamereset.get() not in lstusernamesreset):
         messagebox.showinfo('Reset Password', 'Incorrect username')
     else:
         # getting the security key of the username that was stored previously
@@ -104,7 +120,7 @@ def sendOTPButton():
             'Reset Password', 'OTP has been sent to the registered mobile number')
 
 
-def resetPasswordButton():
+def resetPasswordButton(window):
     if txtaskusernamereset.get() == '' or txtasksecuritykeyreset == '' or txtaskotp.get() == '' or txtresetpass1.get() == '' or txtresetpass1confirm.get() == '':
         messagebox.showinfo('Reset Password', 'Fields cannot be left blank')
     else:
