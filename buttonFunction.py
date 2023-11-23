@@ -76,3 +76,60 @@ def locationFinderButton():
         pass
     else:
         get_weather()
+
+
+def sendOTPButton():
+    if txtaskusernamereset.get() == '' or txtasksecuritykeyreset == '':
+        messagebox.showinfo('Reset Password', 'Fields cannot be left blank')
+    elif txtaskusernamereset.get() not in lstusernamesreset:
+        messagebox.showinfo('Reset Password', 'Incorrect username')
+    else:
+        # getting the security key of the username that was stored previously
+        indexofusername = lstusernamesreset.index(txtaskusernamereset.get())
+        global storedsecuritykey
+        storedsecuritykey = lstsecuritykeyreset[indexofusername]
+        # getting the stored password for use in resetpage
+        global oldpassword
+        oldpassword = lstpasswordsreset[indexofusername]
+        accountsid = 'AC6d502dd14d7cf89e864d81d15e55b2d1'
+        authtoken = 'c76df270ca3c94af92562587306b03fe'
+        client = Client(accountsid, authtoken)
+        global x
+        x = random.randint(1000, 9999)
+        # getting the phone number of the registered user
+        phonenoregistered = lstphonenoreset[indexofusername]
+        message = client.messages.create(
+            body=x, from_='+17174290730', to=f'+{phonenoregistered}')
+        messagebox.showinfo(
+            'Reset Password', 'OTP has been sent to the registered mobile number')
+
+
+def resetPasswordButton():
+    if txtaskusernamereset.get() == '' or txtasksecuritykeyreset == '' or txtaskotp.get() == '' or txtresetpass1.get() == '' or txtresetpass1confirm.get() == '':
+        messagebox.showinfo('Reset Password', 'Fields cannot be left blank')
+    else:
+        if txtaskusernamereset.get() not in lstusernamesreset:
+            messagebox.showinfo('Reset Password', 'Incorrect username')
+        else:
+            if storedsecuritykey == txtasksecuritykeyreset.get():
+                if str(x) == txtaskotp.get():
+                    if txtresetpass1.get() == txtresetpass1confirm.get():
+                        if txtresetpass1.get() != oldpassword:
+                            sql = f'UPDATE nameandpass SET Password = "{txtresetpass1.get()}" where Username = "{txtaskusernamereset.get()}";'
+                            mycursor.execute(sql)
+                            mydb.commit()
+                            messagebox.showinfo(
+                                'Reset Password', 'Password updated successfully')
+                            import connectToDatabase
+                            window.destroy()
+                        else:
+                            messagebox.showinfo(
+                                'Reset Password', 'Cannot use old password')
+                    else:
+                        messagebox.showinfo(
+                            'Reset Password', 'Passwords do not match')
+                else:
+                    messagebox.showinfo(
+                        'Reset Password', 'Incorrect otp entered')
+            else:
+                messagebox.showinfo('Reset Password', 'Incorrect security key')

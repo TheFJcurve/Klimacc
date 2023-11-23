@@ -561,7 +561,7 @@ def signUpWindow(buttonFunction):
     window.mainloop()
 
 
-def locationDataWindow(buttonFunction):
+def locationFinderWindow(buttonFunction):
     """Creating the page for user to input his/her location"""
 
     window = KlimaccWindow()
@@ -735,5 +735,154 @@ def locationDataWindow(buttonFunction):
         relheight=0.3,
         relwidth=0.35
     )
-    
+
+    window.mainloop()
+
+
+def forgotPasswordWindow(buttonFunction):
+
+    window = KlimaccWindow(
+        message="Reset Password"
+    )
+
+    canvas = window.create_canvas(
+        canvasName="canvas"
+    )
+
+    upper_frame = window.create_frame(
+        frameName="upper_frame",
+        parent=canvas,
+        relx=0.5,
+        rely=0.05,
+        relwidth=0.75,
+        relheight=0.1,
+    )
+
+    lower_frame = window.create_frame(
+        frameName="lower_frame",
+        parent=canvas,
+        relx=0.5,
+        rely=0.2,
+        relwidth=0.75,
+        relheight=0.75,
+    )
+
+    # adding the necessary headings and other formatting
+    login_heading = window.create_heading(
+        headingName="login_heading",
+        parent=upper_frame,
+        message="Reset Password",
+        relx=0.29,
+        rely=0.1
+    )
+
+    user_name_heading = window.create_heading(
+        headingName="user_name_heading",
+        parent=lower_frame,
+        message="Username",
+        relx=0.01,
+        rely=0.1
+    )
+
+    security_key_heading = window.create_heading(
+        headingName="security_key_heading",
+        parent=lower_frame,
+        message="Security Key",
+        relx=0.51,
+        rely=0.1
+    )
+
+    otp_heading = window.create_heading(
+        headingName="otp_heading",
+        parent=lower_frame,
+        message="Enter OTP",
+        relx=0.04,
+        rely=0.53
+    )
+
+    new_password_heading = window.create_heading(
+        headingName="new_password_heading",
+        parent=lower_frame,
+        message="New Password",
+        relx=0.01,
+        rely=0.7
+    )
+
+    confirm_password_heading = window.create_heading(
+        headingName="confirm_password_heading",
+        parent=lower_frame,
+        message="Confirm New Password",
+        relx=0.51,
+        rely=0.7
+    )
+
+    # making text boxes to accept input from the user
+
+    user_name_text = window.create_entry(
+        entryName="user_name_text",
+        parent=lower_frame,
+        relx=0.04,
+        rely=0.17,
+        relwidth=0.4,
+        relheight=0.05
+    )
+
+    security_key_text = window.create_entry(
+        entryName="security_key_text",
+        parent=lower_frame,
+        relx=0.54,
+        rely=0.17,
+        relwidth=0.4,
+        relheight=0.05
+    )
+
+    otp_text = window.create_entry(
+        entryName="otp_text",
+        parent=lower_frame,
+        relx=0.3,
+        rely=0.53,
+        relwidth=0.6,
+        relheight=0.05
+    )
+
+    new_password_text = window.create_entry(
+        entryName="new_password_text",
+        parent=lower_frame,
+        relx=0.04,
+        rely=0.77,
+        relwidth=0.4,
+        relheight=0.05
+    )
+
+    confirm_password_text = window.create_entry(
+        entryName="confirm_password_text",
+        parent=lower_frame,
+        relx=0.54,
+        rely=0.77,
+        relwidth=0.4,
+        relheight=0.05
+    )
+
+    button_submit_otp = window.create_button(
+        buttonName="button_submit_otp",
+        parent=canvas,
+        message="Submit OTP",
+        command=buttonFunction,
+        relx=0.38,
+        rely=0.324,
+        relheight=0.1,
+        relwidth=0.2
+    )
+
+    button_reset_password = window.create_button(
+        buttonName="button_reset_password",
+        parent=canvas,
+        message="Reset Password",
+        command=buttonFunction,
+        relx=0.38,
+        rely=0.872,
+        relheight=0.1,
+        relwidth=0.2
+    )
+
     window.mainloop()

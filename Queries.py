@@ -46,6 +46,40 @@ def establishConnection():
     return mycursor
 
 
+def signUpQueries():
+    # creating lists for checking conditions in password check
+    lstusernamesandpasswords = []
+
+    mycursor = establish_connection()
+    mycursor.execute(
+        f"""CREATE TABLE IF NOT EXISTS {table} 
+        (Name Varchar(50), 
+        Username Varchar(50),
+        Password Varchar(50), 
+        SecurityKey Varchar(20), 
+        Phoneno Numeric(13));"""
+    )
+
+    # getting the records of the registered users
+    mycursor.execute(
+        f"SELECT * FROM {table}"
+    )
+    myresult = mycursor.fetchall()
+    for x in myresult:
+        lstusernamesandpasswords.append(list(x))
+
+    # making a separate list of usernames,passwords,securitykeys,and phonenos
+    lstusernames = []
+    lstfullname = []
+    for i in range(len(lstusernamesandpasswords)):
+        lstusernames.append(lstusernamesandpasswords[i][1])
+        lstfullname.append(lstusernamesandpasswords[i][0])
+
+    mycursor.close()
+
+    return (lstusernames, lstfullname)
+
+
 def loginQueries():
 
     lstusernamesandpasswords = []
@@ -118,37 +152,3 @@ def settingRenewableBaseValues():
     )
 
     mycursor.close()
-
-
-def signUpQueries():
-    # creating lists for checking conditions in password check
-    lstusernamesandpasswords = []
-
-    mycursor = establish_connection()
-    mycursor.execute(
-        f"""CREATE TABLE IF NOT EXISTS {table} 
-        (Name Varchar(50), 
-        Username Varchar(50),
-        Password Varchar(50), 
-        SecurityKey Varchar(20), 
-        Phoneno Numeric(13));"""
-    )
-
-    # getting the records of the registered users
-    mycursor.execute(
-        f"SELECT * FROM {table}"
-    )
-    myresult = mycursor.fetchall()
-    for x in myresult:
-        lstusernamesandpasswords.append(list(x))
-
-    # making a separate list of usernames,passwords,securitykeys,and phonenos
-    lstusernames = []
-    lstfullname = []
-    for i in range(len(lstusernamesandpasswords)):
-        lstusernames.append(lstusernamesandpasswords[i][1])
-        lstfullname.append(lstusernamesandpasswords[i][0])
-
-    mycursor.close()
-
-    return (lstusernames, lstfullname)
